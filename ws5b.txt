@@ -1,0 +1,193 @@
+"""
+    Stage: Development-01
+    @author:Mhd Nour Khalifa
+    @author:Huseyin Enes Tandogan
+
+  
+    Stage: Development-02
+    @author:Taha Mert Kirmizigül-120202009
+    @author:Beril Aygül-119202033
+
+
+
+
+"""
+
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
+
+users = [ ('admin','admin')]
+class LoginWindow:
+    # constructor
+
+    def __init__(self):
+        self.window = tk.Tk()
+
+        self.window.title("Library")
+        self._initializeGUI()
+        self._addGUIElementsToFrame()
+        self.window.configure(bg='#333333')
+        # start the GUI frame
+        self.window.mainloop()
+
+    
+
+    """
+        Initialize GUI elements. If it is necessary, you can add
+        more elements.
+        ! PLEASE RENAME THE OBJECTS ACCORDING TO THEIR PURPOSES !
+        ! YOU CAN ADD MORE ELEMENTS IF IT IS NECESSARY !
+    """
+    def _initializeGUI(self):
+        self.lbl01 = tk.Label(text="Username", bg='#333333', fg="#FFFFFF", font=("Arial", 16))
+        self.lbl02 = tk.Label(text="Password" ,bg='#333333', fg="#FFFFFF", font=("Arial", 16))
+        
+        self.req = tk.Label(text="")
+
+        self.txt01 = tk.Entry()
+        self.txt02 = tk.Entry()
+
+        self.btn01 = tk.Button(text="Login")
+        self.btn02 = tk.Button(text="Register")
+
+        self.btn01.bind("<Button-1>", self.handle_click)
+        self.btn02.bind("<Button-1>", self.handle_click)
+        
+        
+        self.exitbtn = tk.Button(text="Exit")
+        
+        self.exitbtn.bind("<Button-1>", self.handle_click)
+
+
+
+   
+    def signup(self):
+        input_user = self.txt01.get()
+        input_pass = self.txt02.get()
+        #append it to the users list
+        users.extend([(input_user,input_pass)])
+        #print that the user is registerd successfully
+        print('user {} with pass {} You have been signed up'.format(input_user,input_pass))
+        self.req.config(text="You been signed up")
+    
+    def login(self):
+       input_user = self.txt01.get()
+       input_pass = self.txt02.get() 
+       #reset the info label
+       self.req.config(text="")
+       # iterate through the users list for validation
+       for user,passw in users:
+            if (user,passw) == (input_user,input_pass):
+                #open the window and remove the login page
+                self.blank_page()
+                self.window.destroy()
+                self.blank.mainloop()
+       
+
+
+    """
+        Add GUI elements to the layout of the frame. If it is necessary,
+        you can add more elements.
+    """
+    def _addGUIElementsToFrame(self):
+        self.lbl01.grid(row=0, column=0, padx=15, pady=15)
+        self.txt01.grid(row=0, column=1, padx=10, pady=5)
+        
+        self.req.grid(row=10, column=1, padx=1, pady=1)
+
+        self.lbl02.grid(row=1, column=0, padx=10, pady=5)
+        self.txt02.grid(row=1, column=1, padx=10, pady=5)
+
+        self.btn01.grid(row=2, column=0, padx=10, pady=5)
+        self.btn02.grid(row=2, column=1, padx=10, pady=5)
+        
+        self.exitbtn.grid(row=3, column=1, padx=10, pady=5)
+    def blank_page(self):
+            self.blank = tk.Tk()
+            self.blank.geometry('700x700')
+            self.blank.title('Welcome to the library')
+            self._initializeGUI()
+            
+            self._addGUIElementsToFrame()
+
+
+    """
+        Action listener for the buttons. If "event.widget" is from
+        one of the buttons, apply the related operation.
+        :param event: action event for detecting which button is clicked
+    """
+    def handle_click(self, event):
+        if(event.widget == self.btn01):
+            self.login()
+          
+        if(event.widget == self.btn02):
+            self.signup()  
+        elif event.widget == self.exitbtn:
+                
+        
+        self.window.destroy()
+        NewPage()
+        elif:
+        print("wrong creds")
+        # if widget is exit, destroys the window
+        if event.widget == self.btnExit:
+            self.window.destroy()
+        
+
+
+
+class NewPage:
+    #constructor 
+    def __init__(self):
+        self.window = tk.Tk() # root window, if you wanna destroy the frame, use this variable
+        self.window.title("Library")
+        self.window.geometry("640x480")
+
+        self._initializeGUI()
+        self._addGUIElementsToFrame()
+
+        # start the GUI frame
+        self.window.mainloop()
+    
+
+    # This exceeds 15 lines because combobox inputs are all on seperate lines. 
+    def _initializeGUI(self):
+        self.lblLoggedin = tk.Label(text="successfully logged in") 
+        self.bookNameEntry = tk.Entry()
+        self.bookNameTxt = tk.Label(text="enter language ")
+        self.categoryTxt = tk.Label(text="language")
+        
+        self.n = tk.StringVar()
+        self.lng_choosen = ttk.Combobox(self.window, width=27,textvariable=self.n)
+        self.lng_choosen['values'] = (' Turkish', 
+                                    
+                          ' French',
+                          ' English',
+                          ' Spanish'
+                          )
+        self.cat_choosen.current(0)
+        self.searchBookBtn = tk.Button(text="Search")
+        self.searchBookBtn.bind("<Button-1>", self.handle_click)
+
+    def _addGUIElementsToFrame(self):
+        self.lblLoggedin.grid(row=0, column=0, padx=10, pady=5)
+        self.bookNameTxt.grid(row=1,column=0,padx=5,pady=5)
+        self.bookNameEntry.grid(row=1,column=1,padx=5,pady=5)
+        self.searchBookBtn.grid(row=3,column=0,padx=5,pady=5)
+        self.lng_choosen.grid(row=2,column=1,padx=5,pady=5)
+        self.categoryTxt.grid(row=2,column=0,padx=5,pady=5)
+
+    def handle_click(self, event):
+        print('now searching  ' + self.bookNameEntry.get() + ' with language ' + self.lng_choosen.get())
+        pass
+
+        
+
+
+
+# main method for testing the application
+if __name__ == "__main__":
+    LoginWindow()
+
+
